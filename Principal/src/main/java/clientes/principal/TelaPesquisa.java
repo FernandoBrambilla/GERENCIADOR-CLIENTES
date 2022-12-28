@@ -1,44 +1,26 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package clientes.principal;
 
-import com.mysql.cj.conf.PropertyKey;
-import com.mysql.cj.x.protobuf.MysqlxSql;
-import static com.sun.java.accessibility.util.EventID.ITEM;
 import java.awt.Component;
-
 import java.awt.Window;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
-import java.util.Locale;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.accessibility.AccessibleRole;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.DateFormatter;
 
 
 public class TelaPesquisa extends javax.swing.JFrame {
 
     public TelaPesquisa() {
         initComponents();
-      setExtendedState(JFrame.MAXIMIZED_BOTH);
-       SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy"); 
-        
-  
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy"); 
     }
 
     @SuppressWarnings("unchecked")
@@ -206,41 +188,33 @@ public class TelaPesquisa extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_botaoSairMouseClicked
-        
         Component comp = SwingUtilities.getRoot(this);
         ((Window) comp).dispose();
-        
     }//GEN-LAST:event_botaoSairMouseClicked
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
-       DefaultTableModel model = ((DefaultTableModel) tabelaResult.getModel());
-              model.setNumRows(0);
-        
+        DefaultTableModel model = ((DefaultTableModel) tabelaResult.getModel());
+        model.setNumRows(0);
         DataBase dataBase=new DataBase();
         dataBase.conectarBanco();
         JTextField textoPesquisa= this.textoPesquisar;
-        
-        
         String query=" SELECT CÓDIGO, NOME, CPF,`DATA_NASC`, "
                     + " TELEFONE, ENDEREÇO, CIDADE, `ESTADO`,CEP, `RG`,"
                     + " `DATA_EXP`, BANCO , AGÊNCIA , `CONTA`"
-                
                     +"FROM CLIENTES WHERE NOME LIKE '"+textoPesquisa.getText()+"%';";
-        
-        
         try {
-            Statement stmt=dataBase.stm();
-            
-            ResultSet result=stmt.executeQuery(query);
-            
-            
-            if(result.first()==false){
-                
-                JOptionPane.showMessageDialog(null,"Não foi encontrado nenhum resultado");
-            }
             SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy"); 
-            
-           for(int i=0; i<=10000;i++) { 
+            Statement stmt=dataBase.stm();
+            ResultSet result=stmt.executeQuery(query);
+            result.last();
+            int qtdRegistros=result.getRow();//PEGA QUANTIDADE DE REGISTROS DA PESQUISA
+            result.setFetchSize(qtdRegistros);
+            if(result.first()==false){
+                JOptionPane.showMessageDialog(null,"Não foi encontrado nenhum resultado");
+                return;
+            }
+            for(int i=0; i<=result.getFetchSize();i++) {
+                //POPULA A TABELA COM O RESULTADO DA PESQUISA
                 model.addRow(new Object[]{});
                 tabelaResult.setValueAt(result.getInt("Código"),i,0);
                 tabelaResult.setValueAt(result.getString("Nome"),i,1);
@@ -255,8 +229,8 @@ public class TelaPesquisa extends javax.swing.JFrame {
                 tabelaResult.setValueAt(result.getString("Endereço"),i,5);
                 tabelaResult.setValueAt(result.getString("Cidade"),i,6);
                 tabelaResult.setValueAt(result.getString("Estado"),i,7);
-                 tabelaResult.setValueAt(result.getString("Cep"),i,8);
-                 tabelaResult.setValueAt(result.getString("Rg"),i,9);
+                tabelaResult.setValueAt(result.getString("Cep"),i,8);
+                tabelaResult.setValueAt(result.getString("Rg"),i,9);
                 if(result.getString("Data_Exp")==null){
                     tabelaResult.setValueAt("<vazio>",i,10);
                 } 
@@ -266,42 +240,44 @@ public class TelaPesquisa extends javax.swing.JFrame {
                 tabelaResult.setValueAt(result.getString("Banco"),i,11);
                 tabelaResult.setValueAt(result.getString("Agência"),i,12);
                 tabelaResult.setValueAt(result.getString("Conta"),i,13);
-                result.next();
+                if(result.isLast()){
+                    break;
+                }
+                else{
+                    result.next();
+               }
             }
-           
-          
+            result.close();
+            stmt.close();
+            dataBase.desconectarBanco();
         }
         catch (SQLException ex) {
             Logger.getLogger(TelaPesquisa.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        }   
     }//GEN-LAST:event_botaoPesquisarActionPerformed
-public int linhaSelecionada (){
-    
-   int rowSelected=tabelaResult.getSelectedRow();
-  int idCliente= Integer.parseInt(String.valueOf(tabelaResult.getValueAt(rowSelected,0)));
-  
-  return idCliente;
-    
+    public int linhaSelecionada (){
+        //PEGA LINHA SELECIONADA NA TABELA DE RESULTADOS
+       
+        int rowSelected=tabelaResult.getSelectedRow();
+        int idCliente= Integer.parseInt(String.valueOf(tabelaResult.getValueAt(rowSelected,0)));
+        return idCliente;  
+         
 }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        //botao editar
-        SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy"); 
-      
+        //BOTAO EDITAR
+        SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy")
         
+        ; 
         try {
-             TelaCadCliente telaCad=new TelaCadCliente();
-        telaCad.setVisible(true);
-        int idCliente= linhaSelecionada();
-       
-      DataBase dataBase= new DataBase();
-      dataBase.conectarBanco();
-      String query="SELECT * FROM CLIENTES WHERE CÓDIGO='"+idCliente+"';";
-              
-            Statement stmt=dataBase.stm();
-           
-            ResultSet result=stmt.executeQuery(query);
+            int idCliente=linhaSelecionada();
             
+            TelaCadCliente telaCad=new TelaCadCliente();
+            telaCad.setVisible(true);
+            DataBase dataBase= new DataBase();
+            dataBase.conectarBanco();
+            String query="SELECT * FROM CLIENTES WHERE CÓDIGO='"+idCliente+"';";
+            Statement stmt=dataBase.stm();
+            ResultSet result=stmt.executeQuery(query);
             result.first();
             telaCad.getTxtCod().setText(result.getString("Código"));
             telaCad.getTxtNome().setText(String.valueOf(result.getString("Nome")));
@@ -317,22 +293,17 @@ public int linhaSelecionada (){
             telaCad.getTxtCidade().setText(String.valueOf(result.getString("Cidade")));
             telaCad.getTxtCep().setText(String.valueOf(result.getString("Cep")));
             telaCad.getComboEstado().setSelectedItem(result.getString("Estado"));
-          
-        
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaPesquisa.class.getName()).log(Level.SEVERE, null, ex);
-    }
-            
-      
-        
+            dataBase.desconectarBanco();
+            }
        
         
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-   
-    public static void main(String args[]) {
+        catch (SQLException ex) {
+            Logger.getLogger(TelaPesquisa.class.getName()).log(Level.SEVERE, null, ex);
         
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    public static void main(String args[]) {
+       //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
@@ -353,7 +324,6 @@ public int linhaSelecionada (){
             java.util.logging.Logger.getLogger(TelaPesquisa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 TelaPesquisa telaPesquisa=new TelaPesquisa();
@@ -361,7 +331,6 @@ public int linhaSelecionada (){
             }
         });    
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoSair;
