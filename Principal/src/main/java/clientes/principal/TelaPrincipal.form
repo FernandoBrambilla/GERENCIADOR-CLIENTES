@@ -23,10 +23,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Component id="FramePesquisa" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="FramePesquisa" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -34,8 +34,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="FramePesquisa" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+              <Component id="FramePesquisa" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -46,26 +46,32 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jLabel1" alignment="0" pref="767" max="32767" attributes="0"/>
+                      <Component id="jSeparator1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
-                              <Component id="statusDB" alignment="0" max="32767" attributes="0"/>
+                              <Component id="statusDB" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="botaoPesquisar" min="-2" pref="250" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                  <Component id="botaoNovoCli" min="-2" pref="244" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="botaoSair" min="-2" pref="250" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-              </Group>
-              <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="botaoNovoCli" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                      <Component id="botaoPesquisar" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                      <Component id="botaoSair" alignment="0" min="-2" pref="200" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace pref="349" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -74,16 +80,16 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="botaoNovoCli" min="-2" pref="100" max="-2" attributes="0"/>
+                  <Component id="botaoNovoCli" min="-2" pref="135" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                  <Component id="botaoPesquisar" min="-2" pref="100" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="botaoSair" pref="100" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                  <Component id="botaoPesquisar" min="-2" pref="130" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <Component id="botaoSair" min="-2" pref="130" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="13" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="statusDB" min="-2" pref="21" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -92,14 +98,18 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="24" style="0"/>
+              <Font name="Ubuntu" size="24" style="0"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Bem vindo ao Gerenciador de Clientes"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="botaoPesquisar">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ubuntu" size="20" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Pesquisar"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botaoPesquisarMouseClicked"/>
@@ -107,7 +117,11 @@
         </Component>
         <Component class="javax.swing.JButton" name="botaoNovoCli">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ubuntu" size="20" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Novo Cliente"/>
+            <Property name="horizontalTextPosition" type="int" value="4"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[100, 100]"/>
             </Property>
@@ -118,13 +132,25 @@
         </Component>
         <Component class="javax.swing.JButton" name="botaoSair">
           <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ubuntu" size="20" style="1"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Sair"/>
+            <Property name="horizontalAlignment" type="int" value="2"/>
+            <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botaoSairMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoSairActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="statusDB">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Ubuntu" size="18" style="1"/>
+            </Property>
+            <Property name="horizontalAlignment" type="int" value="0"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator1">
         </Component>

@@ -1,12 +1,15 @@
 package clientes.principal;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Window;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
@@ -21,6 +24,7 @@ public class TelaCadCliente extends javax.swing.JFrame {
 
     public TelaCadCliente() {
         initComponents();
+      
      
     }
     //GETTERS E SETTERS
@@ -186,14 +190,14 @@ public class TelaCadCliente extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel1.setText("Nome");
+        jLabel1.setText("Nome *");
         jLabel1.setFocusCycleRoot(true);
 
         txtNome.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel3.setText("CPF");
+        jLabel3.setText("CPF *");
 
         jLabel4.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -202,13 +206,13 @@ public class TelaCadCliente extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel5.setText("RG");
+        jLabel5.setText("RG *");
 
         txtRg.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("Endereço");
+        jLabel6.setText("Endereço *");
         jLabel6.setFocusCycleRoot(true);
 
         jLabel7.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
@@ -224,7 +228,7 @@ public class TelaCadCliente extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel9.setText("Cidade");
+        jLabel9.setText("Cidade *");
         jLabel9.setAutoscrolls(true);
         jLabel9.setFocusCycleRoot(true);
 
@@ -232,7 +236,7 @@ public class TelaCadCliente extends javax.swing.JFrame {
 
         labelEstado.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         labelEstado.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        labelEstado.setText("Estado");
+        labelEstado.setText("Estado *");
 
         comboEstado.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
         comboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia ", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais ", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins" }));
@@ -285,12 +289,13 @@ public class TelaCadCliente extends javax.swing.JFrame {
         });
 
         txtCod.setEditable(false);
-        txtCod.setFont(new java.awt.Font("Ubuntu", 0, 16)); // NOI18N
-        txtCod.setForeground(new java.awt.Color(255, 153, 153));
+        txtCod.setFont(new java.awt.Font("Ubuntu", 0, 18)); // NOI18N
+        txtCod.setForeground(new java.awt.Color(102, 102, 102));
         txtCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtCod.setBorder(null);
         txtCod.setCaretColor(javax.swing.UIManager.getDefaults().getColor("Button.disabledBackground"));
-        txtCod.setDisabledTextColor(javax.swing.UIManager.getDefaults().getColor("Button.disabledBackground"));
+        txtCod.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtCod.setDisabledTextColor(new java.awt.Color(255, 51, 153));
         txtCod.setDragEnabled(true);
         txtCod.setFocusable(false);
 
@@ -328,70 +333,73 @@ public class TelaCadCliente extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(2, 2, 2)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(38, 38, 38)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtDtExp, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(txtNome)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtConta, javax.swing.GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(labelEstado)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 1, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtDtExp, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 1, Short.MAX_VALUE)
+                                .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtBanco, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGap(23, 23, 23)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel13)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtAgencia, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel14)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtConta))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel11)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(labelEstado)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(comboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNome))))
+                .addContainerGap(13, Short.MAX_VALUE))
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addComponent(jSeparator2)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -406,8 +414,8 @@ public class TelaCadCliente extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCod, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(16, 16, 16)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
@@ -417,28 +425,28 @@ public class TelaCadCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtRg, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDtExp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtDtExp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtDataNasc, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -477,28 +485,27 @@ public class TelaCadCliente extends javax.swing.JFrame {
         ((Window) comp).dispose();
     }//GEN-LAST:event_botaoSairActionPerformed
 
+  public int ultimoCod() throws SQLException{
+        //CAPTURA O ÚLTIMO CÓDIGO DA TABELA NO BANCO DE DADOS
+        DataBase dataBase= new DataBase();
+        dataBase.conectarBanco();
+        Statement stmt= dataBase.stm();
+        String query="SELECT CÓDIGO FROM CLIENTES ORDER BY CÓDIGO DESC LIMIT 1";
+        ResultSet result=stmt.executeQuery(query);
+        result.first();
+        int ultimoID= result.getInt("CÓDIGO");
+        return ultimoID;
+              
+        
+    }
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
+        //BOTÃO SALVAR
+       
+              
         try {
-            if(this.getTxtDataNasc().getText().isEmpty()){
-                JOptionPane.showMessageDialog(null, " *Campos Obrigatórios");
-                
-            }
-            
-            DataBase dataBase= new DataBase();       
-            dataBase.conectarBanco();
-            Statement stm=dataBase.stm();    
-                    
-            //FORMATA A DATA PARA PADRÃO DO BANCO DE DADOS
+            //CAPTURA OS DADOS DOS CAMPOS
+            int cod= Integer.parseInt(this.getTxtCod().getText());
            
-            DateTimeFormatter parserData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dataNasc = LocalDate.parse(this.getTxtDataNasc().getText(), parserData);
-            LocalDate dataExp = LocalDate.parse(this.getTxtDtExp().getText(), parserData);
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            //FORMAÇÃO DA QUERY DE UPDATE
-           
-            String dataNascFormated = formatterData.format(dataNasc);
-            String dataExpFormated=formatterData.format(dataExp);
-            String idCliente= this.getTxtCod().getText();
             String nome=this.getTxtNome().getText();
             String rg=this.getTxtRg().getText();
             String cpf=this.getTxtCpf().getText();
@@ -510,33 +517,151 @@ public class TelaCadCliente extends javax.swing.JFrame {
             String banco=this.getTxtBanco().getText();
             String agencia=this.getTxtAgencia().getText();
             String conta=this.getTxtConta().getText();
-        
-            String queyUpdate=("UPDATE CLIENTES SET "
-                + " NOME= '" +nome+ "',"
-                + " CIDADE= '"+cidade+"', "
-                + " RG= '"+rg+"', "
-                + " `DATA_NASC`= '"+dataNascFormated+"', "
-                + " `DATA_EXP`= '"+dataExpFormated+"' ,"
-                + " CPF= '"+cpf+"', "
-                + " TELEFONE= '"+telefone+"', "
-                + " ENDEREÇO= '"+endereco+"', "
-                + " CEP= '"+cep+"', "
-                + " ESTADO= '"+estado+"', "
-                + " BANCO= '"+banco+"', "
-                + " `AGÊNCIA`= '"+agencia+"', "
-                + " CONTA= '"+conta+"' "
-                + " WHERE CÓDIGO= "+idCliente+";");
-            int edit=stm.executeUpdate(queyUpdate);
-            JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
+            
+             //VERIFICA DATA DE EXPEDIÇÃO
+             SimpleDateFormat dtFotmat = new SimpleDateFormat("dd/MM/yyyy");
+             String dataExpedicao=this.getTxtDtExp().getText();
+             int dia=Integer.parseInt(dataExpedicao.substring(0,2));
+             int mes=Integer.parseInt(dataExpedicao.substring(3,5));
+             int ano=Integer.parseInt(dataExpedicao.substring(6,10));
+             Calendar calendar = Calendar.getInstance();
+            String dataAtual=dtFotmat.format(calendar.getTime());
+             if((dia+1>LocalDate.now().getDayOfMonth()) ||   
+              (mes>(Integer.parseInt(LocalDate.now().getMonth().toString()))) ||
+                (ano>(LocalDate.now().getYear()))){
+                  JOptionPane.showMessageDialog(null, "Data de Expedição não pode ser maior do que "+dataAtual);
+               return;
+             }
+                          
+             int verifExp=dataExpedicao.indexOf(" ");
+           if(verifExp >= 0 || dia>31 || mes>12 ) {
+                            
+               JOptionPane.showMessageDialog(null, "Data de Expedição Inválida");
+               return;
+            }
+            
+            //VERIFICA DATA DE NASCIMENTO
+            
+             String dataDeNascimento=this.getTxtDataNasc().getText();
+             int diaNasc=Integer.parseInt(dataDeNascimento.substring(0,2));
+             int mesNasc=Integer.parseInt(dataDeNascimento.substring(3,5));
+             int anoNasc=Integer.parseInt(dataDeNascimento.substring(6,10));
+             
+             if((dia+1>=LocalDate.now().getDayOfMonth()) ||   
+              (mes>(Integer.parseInt(LocalDate.now().getMonth().toString()))) ||
+                (ano>(LocalDate.now().getYear()))){
+                  JOptionPane.showMessageDialog(null, "Data de Nascimento não pode ser maior do que "+dataAtual);
+               return;
+             }
+                          
+             int veriNasc=dataDeNascimento.indexOf(" ");
+           if(verifExp >= 0 || dia>31 || mes>12 ) {
+                            
+               JOptionPane.showMessageDialog(null, "Data de Nascimento Inválida");
+               return;
+            }
+            
+                  
+             //VERIFICA CAMPOS OBRIGATÓRIOS
+            if(this.getTxtNome().getText().isEmpty()||
+                this.getTxtRg().getText().isEmpty() ||
+                this.getTxtCpf().getText().isEmpty() ||
+                this.getTxtEndereco().getText().isEmpty() ||
+                this.getTxtCidade().getText().isEmpty() ||
+                this.getComboEstado().getSelectedItem()==null) {
+                
+                JOptionPane.showMessageDialog(null, "* CAMPOS OBRIGATÓRIOS");
+                return;
+             }
+            
+                      
+            //FORMATA DATAS PARA O PADRÃO DO BANCO DE DADO
+            DateTimeFormatter parserData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNasc = LocalDate.parse(this.getTxtDataNasc().getText(), parserData);
+            LocalDate dataExp = LocalDate.parse(this.getTxtDtExp().getText(), parserData);
+            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dataNascFormated = formatterData.format(dataNasc);
+            String dataExpFormated=formatterData.format(dataExp);
+             
+           
+           
+            
+            
+            
+            
+            //COMANDOS PARA INSERIR NOVOS DADOS
+            if(cod>ultimoCod()){ 
+                try{
+                DataBase dataBase= new DataBase();
+                dataBase.conectarBanco();
+                Statement stm=dataBase.stm();
+                int codigo1=cod+1;
+                
+                //FORMAÇÃO DA QUERY INSERT
+                String queryInsert= " INSERT INTO CLIENTES "
+                    + "(CÓDIGO, NOME, RG, `DATA_EXP`, CPF, `DATA_NASC`, TELEFONE,"
+                    + " ENDEREÇO, CIDADE, CEP, ESTADO, BANCO, AGÊNCIA, CONTA) VALUES "
+                    + "('"+codigo1+"', "
+                    + " '"+nome+"', "
+                    + " '"+rg+"', "
+                    + " '"+dataExpFormated+"', "
+                    + " '"+cpf+"', "
+                    + " '"+dataNascFormated+"', "
+                    + " '"+telefone+"', "
+                    + " '"+endereco+"', "
+                    + " '"+cidade+"', "
+                    + " '"+cep+"', "
+                    + " '"+estado+"', "
+                    + " '"+banco+"', "
+                    + " '"+agencia+"', "
+                    + " '"+conta+"');";
+                    int insert=stm.executeUpdate(queryInsert);
+                    
+                    JOptionPane.showMessageDialog(null, "Dados inseridos com sucesso!");
+                }   
+                catch (SQLException ex) {
+                    Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else{
+                
+                //COMANDOS PARA ATUALIZAR DADOS
+                try{
+                    DataBase dataBase= new DataBase();
+                    dataBase.conectarBanco();
+                    Statement stm=dataBase.stm();
+                 
+                    //FORMAÇÃO DA QUERY DE UPDATE
+                    String idCliente= this.getTxtCod().getText();
+                    String queyUpdate=("UPDATE CLIENTES SET "
+                        + " NOME= '" +nome+ "',"
+                        + " CIDADE= '"+cidade+"', "
+                        + " RG= '"+rg+"', "
+                        + " `DATA_NASC`= '"+dataNascFormated+"', "
+                        + " `DATA_EXP`= '"+dataExpFormated+"' ,"
+                        + " CPF= '"+cpf+"', "
+                        + " TELEFONE= '"+telefone+"', "
+                        + " ENDEREÇO= '"+endereco+"', "
+                        + " CEP= '"+cep+"', "
+                        + " ESTADO= '"+estado+"', "
+                        + " BANCO= '"+banco+"', "
+                        + " `AGÊNCIA`= '"+agencia+"', "
+                        + " CONTA= '"+conta+"' "
+                        + " WHERE CÓDIGO= "+idCliente+";");
+                        int edit=stm.executeUpdate(queyUpdate);
+                        
+                        JOptionPane.showMessageDialog(null, "Dados alterados com sucesso!");
+                }
+                catch (SQLException ex) {
+                    Logger.getLogger(TelaCadCliente.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         } 
         catch (SQLException ex) {
             Logger.getLogger(TelaCadCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

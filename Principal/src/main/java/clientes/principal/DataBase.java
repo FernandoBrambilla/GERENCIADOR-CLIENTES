@@ -1,10 +1,8 @@
 
 package clientes.principal;
 
-import com.mysql.cj.conf.PropertyKey;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -13,39 +11,31 @@ import javax.swing.JOptionPane;
 
 
 public class DataBase {
-    
     private Connection conexao = null;
     private final String usuario = "root";
     private final String senha ="";
-    private final String urlConexao ="jdbc:mysql://localhost:3306/movedb";
+    private final String urlConexao ="jdbc:mysql://localhost:3306/movedb?sessionVariables=sql_mode='NO_ENGINE_SUBSTITUTION'&jdbcCompliantTruncation=false";
     public String Status= null;
-    
-    
-    public DataBase(){
        
-      }
-    
 public void conectarBanco() {
     String saida = "";
-    
-     
     try{
-       
-      
-      conexao = DriverManager.getConnection(urlConexao,usuario,senha);
-        
-}
+        conexao = DriverManager.getConnection(urlConexao,usuario,senha);
+    }
     catch(SQLException ex){
         JOptionPane.showMessageDialog(null,ex.getMessage(), "Erro ao conectar no banco", JOptionPane.ERROR_MESSAGE);
-      Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-        Status=" Banco de dados Offline!";
+        Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        
     }
     
 }
 public void desconectarBanco(){
     try{
-        if(!conexao.isClosed()){
+        if(conexao!=null){
             conexao.close();
+        }
+        else{
+            
         }
     }catch (SQLException ex){
         JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro ao desconectar", JOptionPane.ERROR_MESSAGE);
@@ -54,7 +44,7 @@ public void desconectarBanco(){
   }   
 public String Status() throws SQLException{
     String msg;
-    if(conexao.isValid(0)){
+    if(conexao!=null){
         msg=" Banco de dados Online!";
         
     }

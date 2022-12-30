@@ -32,7 +32,7 @@ public class TelaPesquisa extends javax.swing.JFrame {
         botaoPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaResult = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        botaoApagar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         botaoSair = new javax.swing.JButton();
 
@@ -133,8 +133,13 @@ public class TelaPesquisa extends javax.swing.JFrame {
                 .addGap(18, 18, 18))
         );
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jButton2.setText("Apagar");
+        botaoApagar.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        botaoApagar.setText("Apagar");
+        botaoApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoApagarActionPerformed(evt);
+            }
+        });
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton1.setText("Editar");
@@ -158,7 +163,7 @@ public class TelaPesquisa extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(botaoApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
@@ -174,7 +179,7 @@ public class TelaPesquisa extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(botaoSair, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(botaoApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(80, Short.MAX_VALUE))
         );
 
@@ -193,21 +198,23 @@ public class TelaPesquisa extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairMouseClicked
 
     private void botaoPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoPesquisarActionPerformed
+       //PESQUISA REGISTROS
         DefaultTableModel model = ((DefaultTableModel) tabelaResult.getModel());
         model.setNumRows(0);
         DataBase dataBase=new DataBase();
         dataBase.conectarBanco();
-        JTextField textoPesquisa= this.textoPesquisar;
+        JTextField textoPesquisa= this.textoPesquisar; //REGISTO À PESQUISAR
+        //FORMAÇÃO DA QUERY PESQUISA
         String query=" SELECT CÓDIGO, NOME, CPF,`DATA_NASC`, "
                     + " TELEFONE, ENDEREÇO, CIDADE, `ESTADO`,CEP, `RG`,"
                     + " `DATA_EXP`, BANCO , AGÊNCIA , `CONTA`"
-                    +"FROM CLIENTES WHERE NOME LIKE '"+textoPesquisa.getText()+"%';";
+                    +"FROM CLIENTES WHERE NOME LIKE '"+textoPesquisa.getText()+"%' ORDER BY CÓDIGO;";
         try {
             SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy"); 
             Statement stmt=dataBase.stm();
             ResultSet result=stmt.executeQuery(query);
             result.last();
-            int qtdRegistros=result.getRow();//PEGA QUANTIDADE DE REGISTROS DA PESQUISA
+            int qtdRegistros=result.getRow();//SELECIONA QUANTIDADE DE REGISTROS DA PESQUISA
             result.setFetchSize(qtdRegistros);
             if(result.first()==false){
                 JOptionPane.showMessageDialog(null,"Não foi encontrado nenhum resultado");
@@ -256,25 +263,27 @@ public class TelaPesquisa extends javax.swing.JFrame {
         }   
     }//GEN-LAST:event_botaoPesquisarActionPerformed
     public int linhaSelecionada (){
-        //PEGA LINHA SELECIONADA NA TABELA DE RESULTADOS
+        //CAPTURA NÚMERO DA LINHA SELECIONADA NA TABELA DE RESULTADOS
        
         int rowSelected=tabelaResult.getSelectedRow();
         int idCliente= Integer.parseInt(String.valueOf(tabelaResult.getValueAt(rowSelected,0)));
         return idCliente;  
          
 }
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         //BOTAO EDITAR
-        SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy")
+        SimpleDateFormat dtFormat = new SimpleDateFormat("dd/MM/yyyy"); 
         
-        ; 
         try {
-            int idCliente=linhaSelecionada();
+                     
             
+            int idCliente=linhaSelecionada();
             TelaCadCliente telaCad=new TelaCadCliente();
             telaCad.setVisible(true);
             DataBase dataBase= new DataBase();
             dataBase.conectarBanco();
+            //SELECIONA OS DADOS E PRENCHE OS CAMPOS
             String query="SELECT * FROM CLIENTES WHERE CÓDIGO='"+idCliente+"';";
             Statement stmt=dataBase.stm();
             ResultSet result=stmt.executeQuery(query);
@@ -294,14 +303,43 @@ public class TelaPesquisa extends javax.swing.JFrame {
             telaCad.getTxtCep().setText(String.valueOf(result.getString("Cep")));
             telaCad.getComboEstado().setSelectedItem(result.getString("Estado"));
             dataBase.desconectarBanco();
-            }
-       
-        
+            result.close();
+            stmt.close();
+            
+        }
         catch (SQLException ex) {
             Logger.getLogger(TelaPesquisa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void botaoApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarActionPerformed
+        //APAGAR O REGISTRO SELECIONADO
+        
+        String nomeExluir= tabelaResult.getValueAt(tabelaResult.getSelectedRow(),1).toString();
+        JOptionPane.showMessageDialog(null, "Confirma a exclusão de: "+nomeExluir+" ?");
+        
+        if(JOptionPane.PLAIN_MESSAGE!=0){
+        try {
+            DataBase dataBase= new DataBase();
+            dataBase.conectarBanco();
+            Statement stmt=dataBase.stm();
+            String queryDelete=" DELETE FROM CLIENTES WHERE CÓDIGO= "+linhaSelecionada()+";";
+            int delete =stmt.executeUpdate(queryDelete);
+            JOptionPane.showMessageDialog(null, "Registro excluído com sucesso!");
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaPesquisa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      
         
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+        botaoPesquisarActionPerformed(evt);
+        
+        
+        
+        
+    }//GEN-LAST:event_botaoApagarActionPerformed
     public static void main(String args[]) {
        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -332,11 +370,11 @@ public class TelaPesquisa extends javax.swing.JFrame {
         });    
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botaoApagar;
     private javax.swing.JButton botaoPesquisar;
     private javax.swing.JButton botaoSair;
     private javax.swing.JInternalFrame framePesquisa;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabelaResult;
     private javax.swing.JTextField textoPesquisar;
