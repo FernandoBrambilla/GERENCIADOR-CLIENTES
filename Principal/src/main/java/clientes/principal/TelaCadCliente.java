@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -486,6 +487,7 @@ public class TelaCadCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoSairActionPerformed
 
   public int ultimoCod() throws SQLException{
+      
         //CAPTURA O ÚLTIMO CÓDIGO DA TABELA NO BANCO DE DADOS
         DataBase dataBase= new DataBase();
         dataBase.conectarBanco();
@@ -495,17 +497,14 @@ public class TelaCadCliente extends javax.swing.JFrame {
         result.first();
         int ultimoID= result.getInt("CÓDIGO");
         return ultimoID;
-              
-        
     }
+  
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         //BOTÃO SALVAR
-       
-              
+         
         try {
             //CAPTURA OS DADOS DOS CAMPOS
             int cod= Integer.parseInt(this.getTxtCod().getText());
-           
             String nome=this.getTxtNome().getText();
             String rg=this.getTxtRg().getText();
             String cpf=this.getTxtCpf().getText();
@@ -518,76 +517,72 @@ public class TelaCadCliente extends javax.swing.JFrame {
             String agencia=this.getTxtAgencia().getText();
             String conta=this.getTxtConta().getText();
             
-             //VERIFICA DATA DE EXPEDIÇÃO
-             SimpleDateFormat dtFotmat = new SimpleDateFormat("dd/MM/yyyy");
-             String dataExpedicao=this.getTxtDtExp().getText();
-             int dia=Integer.parseInt(dataExpedicao.substring(0,2));
-             int mes=Integer.parseInt(dataExpedicao.substring(3,5));
-             int ano=Integer.parseInt(dataExpedicao.substring(6,10));
-             Calendar calendar = Calendar.getInstance();
-            String dataAtual=dtFotmat.format(calendar.getTime());
-             if((dia+1>LocalDate.now().getDayOfMonth()) ||   
-              (mes>(Integer.parseInt(LocalDate.now().getMonth().toString()))) ||
-                (ano>(LocalDate.now().getYear()))){
-                  JOptionPane.showMessageDialog(null, "Data de Expedição não pode ser maior do que "+dataAtual);
-               return;
-             }
-                          
-             int verifExp=dataExpedicao.indexOf(" ");
-           if(verifExp >= 0 || dia>31 || mes>12 ) {
-                            
-               JOptionPane.showMessageDialog(null, "Data de Expedição Inválida");
-               return;
+            
+            //VERIFICA CAMPOS OBRIGATÓRIOS
+            int verfExp=this.getTxtDtExp().getText().indexOf(" ");
+            if(verfExp >= 0){
+                JOptionPane.showMessageDialog(null, "* DATA DE EXPEDIÇÃO OBRIGATÓRIO");
+                return;
             }
-            
-            //VERIFICA DATA DE NASCIMENTO
-            
-             String dataDeNascimento=this.getTxtDataNasc().getText();
-             int diaNasc=Integer.parseInt(dataDeNascimento.substring(0,2));
-             int mesNasc=Integer.parseInt(dataDeNascimento.substring(3,5));
-             int anoNasc=Integer.parseInt(dataDeNascimento.substring(6,10));
-             
-             if((dia+1>=LocalDate.now().getDayOfMonth()) ||   
-              (mes>(Integer.parseInt(LocalDate.now().getMonth().toString()))) ||
-                (ano>(LocalDate.now().getYear()))){
-                  JOptionPane.showMessageDialog(null, "Data de Nascimento não pode ser maior do que "+dataAtual);
-               return;
-             }
-                          
-             int veriNasc=dataDeNascimento.indexOf(" ");
-           if(verifExp >= 0 || dia>31 || mes>12 ) {
-                            
-               JOptionPane.showMessageDialog(null, "Data de Nascimento Inválida");
-               return;
+            int verifNasc= this.getTxtDataNasc().getText().indexOf(" ");
+            if(verifNasc >= 0){
+                JOptionPane.showMessageDialog(null, "* DATA DE NASCIMENTO OBRIGATÓRIO");
+                return;
             }
-            
-                  
-             //VERIFICA CAMPOS OBRIGATÓRIOS
             if(this.getTxtNome().getText().isEmpty()||
                 this.getTxtRg().getText().isEmpty() ||
                 this.getTxtCpf().getText().isEmpty() ||
                 this.getTxtEndereco().getText().isEmpty() ||
                 this.getTxtCidade().getText().isEmpty() ||
                 this.getComboEstado().getSelectedItem()==null) {
-                
                 JOptionPane.showMessageDialog(null, "* CAMPOS OBRIGATÓRIOS");
                 return;
              }
-            
+           
+            //CONVERTE DATA PARA EXIBIÇÃO PADRÃO DD/MM/AAAA
+            DateTimeFormatter dtFormatBr = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataExp = LocalDate.parse(this.getTxtDtExp().getText());
+            LocalDate dataNasc = LocalDate.parse(this.getTxtDataNasc().getText());
+            String dataExpedicao= dtFormatBr.format(dataExp);
+            String dataNascimento=dtFormatBr.format(dataNasc);
+           
                       
-            //FORMATA DATAS PARA O PADRÃO DO BANCO DE DADO
-            DateTimeFormatter parserData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate dataNasc = LocalDate.parse(this.getTxtDataNasc().getText(), parserData);
-            LocalDate dataExp = LocalDate.parse(this.getTxtDtExp().getText(), parserData);
-            DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            String dataNascFormated = formatterData.format(dataNasc);
-            String dataExpFormated=formatterData.format(dataExp);
+            //VERIFICA DATA DE EXPEDIÇÃO
+            int diaExp= Integer.parseInt(dataExpedicao.substring(0,2));
+            int mesExp=Integer.parseInt(dataExpedicao.substring(3,5));
+            LocalDate dataAtual= LocalDate.now();
+            if(dataExp.isAfter(dataAtual)){
+                JOptionPane.showMessageDialog(null,"Data de Expedição não pode ser maior do que"
+                + " "+dataAtual.format(dtFormatBr));
+                return;
+            }
+            int verifExp=dataExpedicao.indexOf(" ");
+             if( diaExp>31 || mesExp>12 ) {
+                JOptionPane.showMessageDialog(null, "Data de Expedição Inválida");
+                return;
+            }
+            
+            //VERIFICA DATA DE NASCIMENTO
+            int diaNasc= Integer.parseInt(dataNascimento.substring(0,2));
+            int mesNasc=Integer.parseInt(dataNascimento.substring(3,5));
+            if(dataNasc.isAfter(dataAtual)){
+                JOptionPane.showMessageDialog(null,"Data de Nascimento não pode ser maior do que"
+                + " "+dataAtual.format(dtFormatBr));
+                return;
+            }
+            
+             if(diaNasc>31 || mesNasc>12 ) {
+                JOptionPane.showMessageDialog(null, "Data de Nascimento Inválida");
+                return;
+            }
+             
+              //FORMATA DATAS PARA O PADRÃO DO BANCO DE DADO
+            DateTimeFormatter dtFormatUs = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String dataNascFormated = dtFormatUs.format(dataNasc);
+            String dataExpFormated=dtFormatBr.format(dataExp);
+           
              
            
-           
-            
-            
-            
             
             //COMANDOS PARA INSERIR NOVOS DADOS
             if(cod>ultimoCod()){ 
