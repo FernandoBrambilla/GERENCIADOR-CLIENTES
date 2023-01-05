@@ -109,7 +109,6 @@
               <Font name="Ubuntu" size="20" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Pesquisar"/>
-            <Property name="horizontalAlignment" type="int" value="2"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="botaoPesquisarMouseClicked"/>
@@ -136,7 +135,6 @@
               <Font name="Ubuntu" size="20" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Sair"/>
-            <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="horizontalTextPosition" type="int" value="4"/>
           </Properties>
           <Events>

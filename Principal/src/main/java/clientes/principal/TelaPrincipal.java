@@ -87,7 +87,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         botaoPesquisar.setFont(new java.awt.Font("Ubuntu", 1, 20)); // NOI18N
         botaoPesquisar.setText("Pesquisar");
-        botaoPesquisar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         botaoPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 botaoPesquisarMouseClicked(evt);
@@ -106,7 +105,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         botaoSair.setFont(new java.awt.Font("Ubuntu", 1, 20)); // NOI18N
         botaoSair.setText("Sair");
-        botaoSair.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         botaoSair.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         botaoSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
