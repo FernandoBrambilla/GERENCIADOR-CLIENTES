@@ -203,7 +203,7 @@ public class TelaPesquisa extends javax.swing.JFrame {
         model.setNumRows(0);
         DataBase dataBase=new DataBase();
         dataBase.conectarBanco();
-        JTextField textoPesquisa= this.textoPesquisar; //REGISTO À PESQUISAR
+        JTextField textoPesquisa= this.textoPesquisar; //REGISTRO À PESQUISAR
         //FORMAÇÃO DA QUERY PESQUISA
         String query=" SELECT CÓDIGO, NOME, CPF,`DATA_NASC`, "
                     + " TELEFONE, ENDEREÇO, CIDADE, `ESTADO`,CEP, `RG`,"
